@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>SpringSpree'15 | Idol Vote</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <style>
+        body{
+            padding-top: 70px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">
+        SpringSpree'15 - IDOL VOTING PORTAL
+      </a>
+    </div>
+  </div>
+</nav>
+<div class="container">
+    <form class="form-group" method="post">
+    <div class="row">
+    {% for participant in participants %}
+        <div class="col-md-3">
+        <img src="{{ participant.picture.url }}" height="200" width="200"/>
+        <br>
+        <div class="checkbox">
+            <label>
+                <input name="checked" type="checkbox" value="{{ participant.id }}">{{ participant.name }}
+            </label>
+        </div>
+        </div>
+    {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+        </div>
+    </div>
+    {% csrf_token %}
+    </form>
+</div>
+</body>
+</html>
