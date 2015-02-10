@@ -1,5 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponseRedirect
 from models import Participant,UserProfile
 
 
@@ -15,7 +18,7 @@ def vote(request):
 		participants = Participant.objects.all()
 		return render(request,'poll/vote.html',{'participants':participants,'user':user})
 	if user_profile.voted():
-		return render(request,'poll/thanks.html',{'user':user.username})
+		return render(request,'poll/thanks.html',{'user':user.name})
 	elif request.method == 'POST':
 		checked = request.POST.getlist('checked')
 		for id in checked:
@@ -29,4 +32,29 @@ def vote(request):
 	else:
 		participants = Participant.objects.all()
 		return render(request,'poll/vote.html',{'participants':participants,'user':user})
+
+
+def authentication(request):
+	if request.method == 'POST':
+		email = request.POST['inputEmail']
+		name = request.POST['inputName']
+
+		user,created = User.objects.get_or_create(username=email)
+
+		if created:
+			user.first_name = name
+			user.set_password('F!V35')
+			user.email = email
+			user.save()
+
+		user.backend = 'django.contrib.auth.backends.ModelBackend'
+		user_new = authenticate(username=email,password='F!V35')
+
+		if user_new is not None:
+			login(request,user_new)
+
+		return HttpResponseRedirect('/vote')
+	else:
+		return render(request,'poll/index.html',{'error':'There has been some error in logging you in.'})
+
 

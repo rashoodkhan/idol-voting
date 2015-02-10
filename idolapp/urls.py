@@ -12,5 +12,6 @@ urlpatterns = patterns('',
     url(r'^$','poll.views.index'),
     url(r'^/','poll.views.index'),
     url('', include('social.apps.django_app.urls', namespace='social')),
-    url(r'^vote/?','poll.views.vote')
+    url(r'^vote/?','poll.views.vote'),
+    url(r'^authenticate','poll.views.authentication')
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

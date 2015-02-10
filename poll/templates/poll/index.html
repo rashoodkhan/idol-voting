@@ -9,6 +9,8 @@
             padding-top: 70px;
         }
     </style>
+    {% load staticfiles %}
+    <script src="{% static 'js/signup.js' %}" ></script>
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -25,7 +27,10 @@
     <div class="jumbotron">
     <h1>Welcome to Idol Voting Platform</h1>
     <h3>To vote for your favorite participant, you need to sign in using Facebook!</h3>
-    <a class="button" href="{% url 'social:begin' backend='facebook' %}">Facebook Login</a>
+
+        <form action="">
+            <button type="submit" class="btn btn-primary btn-lg" onclick="fb_signup()">Facebook Login</button>
+    </form>
 </div>
     </div>
 </body>
