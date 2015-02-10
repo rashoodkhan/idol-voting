@@ -19,7 +19,7 @@
         // code below.
         window.fbAsyncInit = function() {
             FB.init({
-                appId : '5135 96625445095',
+                appId : '513596625445095',
                 cookie : true, // enable cookies to allow the server to access
 // the session
                 xfbml : true, // parse social plugins on this page
@@ -48,7 +48,7 @@
         // Here we run a very simple test of the Graph API after login is
         // successful. See statusChangeCallback() for when this call is made.
         function fb_signup() {
-            $('#loading').show();
+            // $('#loading').show();
             var data = {
                 scope : 'email'
             };
@@ -59,8 +59,8 @@
                         console.log('Good to see you, ' + response.name + '.');
                         console.log(response);
                         if(response.email==undefined){
-                            $('#loading').hide();
-                            $("#status").removeClass().addClass("alert alert-danger").html("You did not provide your email address!");
+                            // $('#loading').hide();
+                            // $("#status").removeClass().addClass("alert alert-danger").html("You did not provide your email address!");
                             data['auth_type'] = 'rerequest';
                             return false;
                         }else{
@@ -77,7 +77,7 @@
                 } else {
                     console.log('User cancelled login or did not fully authorize.');
 //            $("#status").removeClass().addClass("alert alert-danger").html("Error occured. Please try later.");
-                    $('#loading').hide();
+                    // $('#loading').hide();
 
                 }
             },{
@@ -170,14 +170,15 @@
         function social_login(data){
             var csrf = document.getElementsByName('csrfmiddlewaretoken')[0].value;
             console.log(csrf);
-            data.csrfmiddlewaretoken = csrf;
+            data.csrfmiddlewaretoken = 'csrf';
             $.ajax({
-                url : "/authenticate",
+                url : "/auth-fb",
                 type: "POST",
                 data : data,
                 success: function(data, textStatus, jqXHR)
                 {
-                    $('#loading').hide();
+                	window.location.href = "http://idol.springspree.in/vote"
+                    // $('#loading').hide();
                     data = JSON.parse(data);
                     console.log(data);
                     if (data.status === "success") {
@@ -207,8 +208,9 @@
     <h1>Welcome to Idol Voting Platform</h1>
     <h3>To vote for your favorite participant, you need to sign in using Facebook!</h3>
 
-        <form action="">
-            <button type="submit" class="btn btn-primary btn-lg" onclick="fb_signup()">Facebook Login</button>
+        <form >
+            <button type="button" class="btn btn-primary btn-lg" onclick="fb_signup()">Facebook Login</button>
+            {% csrf_token %}
     </form>
 </div>
     </div>
