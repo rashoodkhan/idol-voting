@@ -10,15 +10,16 @@
             padding-top: 70px;
         }
     </style>
-    <script>
 
+
+    <script>
         // This is called with the results from from FB.getLoginStatus().
         // This function is called when someone finishes with the Login
         // Button. See the onlogin handler attached to it in the sample
         // code below.
         window.fbAsyncInit = function() {
             FB.init({
-                appId : '513596625445095',
+                appId : '5135 96625445095',
                 cookie : true, // enable cookies to allow the server to access
 // the session
                 xfbml : true, // parse social plugins on this page
@@ -53,7 +54,7 @@
             };
             FB.login(function(response) {
                 if (response.authResponse) {
-                    console.log('Welcome! Fetching your information.... ');
+                    console.log('Welcome!  Fetching your information.... ');
                     FB.api('/me', function(response) {
                         console.log('Good to see you, ' + response.name + '.');
                         console.log(response);
@@ -65,17 +66,19 @@
                         }else{
                             data = {
                                 'inputEmail': response.email,
-                                'media': 'facebook',
-                                'inputName': response.name,
-                                'inputGender': response.gender
+                                'inputFb': true,
+                                'inputName': response.name
                             };
                             social_login(data);
                         }
                     });
+
+
                 } else {
                     console.log('User cancelled login or did not fully authorize.');
-// $("#status").removeClass().addClass("alert alert-danger").html("Error occured. Please try later.");
+//            $("#status").removeClass().addClass("alert alert-danger").html("Error occured. Please try later.");
                     $('#loading').hide();
+
                 }
             },{
                 scope: 'email',
