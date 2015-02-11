@@ -59,4 +59,8 @@ def authentication(request):
 	else:
 		return render(request,'poll/index.html',{'error':'There has been some error in logging you in.'})
 
+def results(request):
+	participants = Participant.objects.order_by('-vote_count')
+	return render(request,'poll/result.html',{'participants':participants})
+
 
