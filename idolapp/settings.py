@@ -62,7 +62,7 @@ DATABASES = {
         'ENGINE':'django.db.backends.mysql',
         'NAME': 'idol',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': 'Orange2020',
         'HOST': 'localhost',
         #'PORT': '3306',
     }

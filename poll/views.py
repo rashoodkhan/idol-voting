@@ -4,9 +4,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
 from models import Participant,UserProfile
-
+from django.views.decorators.csrf import csrf_exempt
 
 def index(request):
+	if request.user.is_authenticated():
+		return HttpResponseRedirect('/vote')
 	return render(request,'poll/index.html',{})
 
 @login_required
@@ -16,9 +18,9 @@ def vote(request):
 
 	if created:
 		participants = Participant.objects.all()
-		return render(request,'poll/vote.html',{'participants':participants,'user':user})
+		return render(request,'poll/vote.html',{'participants':participants,'user':user.first_name})
 	if user_profile.voted():
-		return render(request,'poll/thanks.html',{'user':user.name})
+		return render(request,'poll/thanks.html',{'user':user.first_name})
 	elif request.method == 'POST':
 		checked = request.POST.getlist('checked')
 		for id in checked:
@@ -33,7 +35,7 @@ def vote(request):
 		participants = Participant.objects.all()
 		return render(request,'poll/vote.html',{'participants':participants,'user':user})
 
-
+@csrf_exempt
 def authentication(request):
 	if request.method == 'POST':
 		email = request.POST['inputEmail']

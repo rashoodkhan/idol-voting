@@ -16,3 +16,6 @@ class UserProfile(models.Model):
 
 	def voted(self):
 		return self.has_voted
+
+	def __unicode__(self):
+		return self.user.first_name
